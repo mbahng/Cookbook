@@ -53,11 +53,9 @@ class NeuralNetwork(nn.Module):
             nn.Linear(32*32*3, 512),
             nn.ReLU(),
             nn.Dropout(p=0.5, inplace=False), 
-            FactorMultiply(2.0),
             nn.Linear(512, 512),
             nn.ReLU(),
             nn.Dropout(p=0.5, inplace=False), 
-            FactorMultiply(2.0),
             nn.Linear(512, 10)
         )
 

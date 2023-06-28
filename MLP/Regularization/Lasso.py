@@ -16,7 +16,7 @@ device = (
     else "cpu"
 )
 
-root = os.path.join('/home/mbahng/Desktop/Cookbook/Deep Learning/data')
+root = os.path.join('/home/mbahng/Desktop/Cookbook/data')
 
 training_data = datasets.CIFAR10(
     root=root,            
@@ -41,6 +41,11 @@ train_dataloader = DataLoader(training_data,    # our dataset
                               shuffle=True      # shuffling the data
                             )
 test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
+
+for X, y in train_dataloader: 
+    print(X)
+    print(y)
+    assert False
 
 train_features, train_labels = next(iter(train_dataloader))
 

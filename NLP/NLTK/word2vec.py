@@ -17,13 +17,11 @@ for i in sent_tokenize(f):
 
 	data.append(temp)
 
-print(data[1])
-
 # Create CBOW model
 model1 = gensim.models.Word2Vec(data, min_count = 1,
 							vector_size = 100, window = 5)
 
-print(model1)
+print(model1.wv["alice"])
 
 # Print results
 print("Cosine similarity between 'alice' " +

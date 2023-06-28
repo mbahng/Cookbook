@@ -3,6 +3,7 @@ import torch.nn as nn
 import os 
 from torchvision import datasets
 from torchvision.transforms import ToTensor
+import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt 
 
@@ -16,17 +17,21 @@ device = (
 
 root = os.path.join('/home/mbahng/Desktop/Cookbook/Deep Learning/data')
 
+transform = transforms.Compose(
+    [transforms.ToTensor(),
+     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+
 training_data = datasets.CIFAR10(
     root=root,            
     train=True,            
     download=True,          
-    transform=ToTensor()    
+    transform=transform    
 )
 test_data = datasets.CIFAR10(
     root=root,
     train=False,
     download=True,
-    transform=ToTensor()
+    transform=transform 
 )
 
 train_dataloader = DataLoader(training_data,    # our dataset
@@ -57,10 +62,14 @@ class NeuralNetwork(nn.Module):
 model = NeuralNetwork().to(device)
 
 loss_fn = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(
+optimizer = torch.optim.SGD(
     model.parameters(),     # which parameters to optimize
-    lr=1e-3                 # learning rate 
+    lr=1e-3,                 # learning rate 
+    momentum=0.9
 )
+
+# SGD should be used by default, 
+# 
 
 def train(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
